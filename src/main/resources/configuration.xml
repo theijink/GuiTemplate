@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configurations>
+    <default>
+        <root class="Windows.Basic">
+            <menu class="Menus.Basic"></menu>
+            <frames>
+                <frame class="Frames.Basic">
+                    <name>"viewFrame"</name>
+                    <widgets>
+                        <widget class="Widgets.Graph2DFrame">
+                            <name>"graph"</name>
+                            <options></options>
+                        </widget>
+                        <widget class="Widgets.LabelEntryFrame">
+                            <name>"entry"</name>
+                            <options></options>
+                        </widget>
+                        <widget class="Widgets.SingleButtonFrame">
+                            <name>"button"</name>
+                            <options></options>
+                        </widget>
+                    </widgets>
+                </frame>
+                <frame class="Frames.Basic">
+                    <name>"settingsFrame"</name>
+                    <widgets>
+                        <widget class="">
+                            <name>""</name>
+                            <options></options>
+                        </widget>
+                    </widgets>
+                </frame>
+            </frames>
+        </root>
+    </default>
+    <custom></custom>
+    <simple></simple>
+    <extended></extended>
+</configurations>
