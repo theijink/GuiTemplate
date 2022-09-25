@@ -2,3 +2,4 @@ src/main/_java
 src/test/_java
 src/main/resources/__pycache__/
 target
+.vscode
