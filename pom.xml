@@ -14,6 +14,10 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.directory>${project.basedir}</project.build.directory>
+    <project.compiled.test_classes.directory>${project.basedir}/target/test-classes/features/</project.compiled.test_classes.directory>
+    <project.target.directory>${project.basedir}/target/</project.target.directory>
+    <project.src.resources.directory>${project.basedir}/src/main/resources/</project.src.resources.directory>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
@@ -69,29 +73,83 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-        <!-- python execution plugin -->
+
+        <!-- executable maven plugin -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
           <version>3.1.0</version>
           <executions>
+            <!-- creating the venv -->
             <execution>
-              <!--id>python_build</id-->
+              <configuration>
+                <workingDirectory>${project.src.resources.directory}</workingDirectory>
+                <executable>python</executable>
+                <arguments>
+                  <argument>make.py</argument>
+                  <!--argument>-venv</argument-->
+                </arguments>
+              </configuration>    
+              <!--id>python_venv</id-->
+              <phase>process-resources</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>      
+              <inherited>true</inherited>
+            </execution>
+            <?ignore
+            <!-- compiling the source code -->
+            <execution>
+              <configuration>
+                <executable>python</executable>
+                <workingDirectory>${project.src.resources.directory}</workingDirectory>
+                <arguments>
+                  <argument>make.py</argument>
+                  <!--argument>-compile</argument-->
+                </arguments>
+              </configuration>    
+              <id>python_build</id>
               <phase>compile</phase>
               <goals>
                 <goal>exec</goal>
-              </goals>
+              </goals>      
             </execution>
+            <!-- unit testing -->
+            <execution>
+              <configuration>
+                <executable>behave</executable>
+                <workingDirectory>${project.compiled.test_classes.directory}</workingDirectory>
+                <arguments>
+                  <argument>--tags=@unit</argument>
+                  <argument>--tags=~@skip</argument>
+                </arguments>
+              </configuration>    
+              <id>python_unit_test</id>
+              <phase>test</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>      
+            </execution>
+            <!-- building the project -->
+            <execution>
+              <configuration>
+                <executable>python</executable>
+                <workingDirectory>${project.target.directory}</workingDirectory>
+                <arguments>
+                  <argument>make.py</argument>
+                  <argument>-install</argument>
+                </arguments>
+              </configuration>    
+              <id>python_install</id>
+              <phase>install</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>      
+            </execution>
+          ?>
           </executions>
-          <configuration>
-            <executable>python</executable>
-            <workingDirectory>src/main/resources/</workingDirectory>
-            <arguments>
-              <argument>control.py</argument>
-              <!--argument>attempt.py</argument-->
-            </arguments>
-          </configuration>
         </plugin>
+
       </plugins>
     </pluginManagement>
   </build>
