@@ -1,9 +1,9 @@
+import Windows, Menus, Frames, Widgets
 import untangle
 import os
 import sys
 #root,dirs,files=next(os.walk(sys.argv[0][:-len(sys.argv[0].split('/')[-1])]+'../python/'))
 #[sys.path.append(root+file) for file in files]
-#import Windows, Menus, Frames, Widgets
 #print(sys.path)
 
 if __name__=="__main__":
@@ -13,6 +13,7 @@ if __name__=="__main__":
     #root = getattr(getattr(getattr(getattr(obj.configurations, config), 'root'), 'class'))
     #root = setattr(getattr(getattr(obj.configurations, config), 'root')['class'])
     root = getattr(eval(getattr(obj.configurations, config).root['class'].split('.')[0]), getattr(obj.configurations, config).root['class'].split('.')[1])
+    print(root)
 
 if False:
     from xml.etree import ElementTree
